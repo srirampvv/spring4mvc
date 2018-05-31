@@ -1,0 +1,185 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/redmond/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.4.1/css/ui.jqgrid.css" />
+    <style type="text/css">
+        html, body { font-size: 75%; }
+    </style>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.4.1/js/i18n/grid.locale-en.js"></script>
+    <script type="text/javascript">
+        $.jgrid.no_legacy_api = true;
+        $.jgrid.useJSON = true;
+    </script>
+    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.4.1/js/jquery.jqGrid.src.js"></script>
+    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jquery.raty/2.1.0/js/jquery.raty.js"></script>
+
+    <script type="text/javascript">
+    //<![CDATA[
+        /*global $ */
+        /*jslint unparam: true, browser: true */
+        $(function () {
+            'use strict';
+            var categories = ["All", "sport", "science"],
+                categoriesStr = ":All;1:sport;2:science",
+                subcategories = ["All", "football", "formel 1", "physics", "mathematics"],
+                subcategoriesStr = ":All;1:football;2:formel 1;3:physics;4:mathematics",
+                mydata = [
+                    {id: 0, Name: "Lukas Podolski",     Category: 1, Subcategory: 1, Ranking: 2},
+                    {id: 1, Name: "Michael Schumacher", Category: 1, Subcategory: 2, Ranking: 4},
+                    {id: 2, Name: "Albert Einstein",    Category: 2, Subcategory: 3, Ranking: 5},
+                    {id: 3, Name: "Blaise Pascal",      Category: 2, Subcategory: 4, Ranking: 5}
+                ],
+                lastSel,
+                grid = $("#list"),
+                initRaty = function () {
+                    $(this).find("div.raty-star").raty({
+                        readOnly: true,
+                        //path: 'http://www.ok-soft-gmbh.com/jquery.raty/2.1.0/img/',
+                        start: function () {
+                            return $(this).attr('data-rating');
+                        }
+                    });
+                },
+                ratyEditControl = function (value) {
+                    var $elem = $('<div>', {"data-rating": value});
+                    window.setTimeout(function () {
+                        var $span = $elem.closest("span.FormElement"), textNode;
+                        if ($span.length > 0) {
+                            // fix the bug in form editing
+                            textNode = $span[0].previousSibling;
+                            if (textNode && textNode.nodeName === "#text" && textNode.nodeValue === String.fromCharCode(160)) {
+                               // fix the problem with '&nbsp;' before the span
+                                textNode.parentNode.removeChild(textNode);
+                            }
+                        }
+                        $elem.raty({
+                            //path: 'http://www.ok-soft-gmbh.com/jquery.raty/2.1.0/img/',
+                            cancelHint: 'remove my rating!',
+                            cancelPlace: 'right',
+                            cancel: true,
+                            start: function () {
+                                return $(this).attr('data-rating');
+                            },
+                            click: function (score) {
+                                $(this).attr('data-rating', score);
+                                $(this.parentNode).triggerHandler('change');
+                            }
+                        });
+                    }, 100);
+                    return $elem[0];
+                };
+        
+            $.extend($.jgrid.search, {
+                multipleSearch: true,
+                multipleGroup: true,
+                recreateFilter: true,
+                closeOnEscape: true,
+                closeAfterSearch: true,
+                overlay: 0
+            });
+        
+            $.fn.raty.defaults.path = 'http://www.ok-soft-gmbh.com/jquery.raty/2.1.0/img/';
+        
+            grid.jqGrid({
+                data: mydata,
+                datatype: 'local',
+                colModel: [
+                    { name: 'Name', index: 'Name', width: 150, editable: true },
+                    { name: 'Category', index: 'Category', width: 100, formatter: 'select', stype: 'select',
+                        searchoptions: { sopt: ['eq'] },
+                        sorttype: function (cell) {
+                            return categories[cell];
+                        },
+                        edittype: 'select', editoptions: { value: categoriesStr }},
+                    { name: 'Subcategory', index: 'Subcategory', width: 100, formatter: 'select', stype: 'select',
+                        sorttype: function (cell) {
+                            return subcategories[cell];
+                        },
+                        edittype: 'select', editoptions: { value: subcategoriesStr },
+                        searchoptions: { sopt: ['eq'] }},
+                    { name: 'Ranking', editable: true, width: 125, title: false, align: "center", sorttype: 'int',
+                        formatter: function (cellvalue) {
+                            return '<div class="raty-star" data-rating="' + cellvalue + '"></div>';
+                        },
+                        unformat: function (cellvalue, options, cellobject) {
+                            // get rating value from the hidden span
+                            return $(cellobject).children("div").raty("score");
+                        },
+                        edittype: 'custom',
+                        editoptions: {
+                            custom_element: ratyEditControl,
+                            custom_value: function ($elem) {
+                                return $elem.raty('score');
+                            }
+                        },
+                        stype: 'custom',
+                        searchoptions: {
+                            custom_element: ratyEditControl,
+                            custom_value: function ($elem, operation, value) {
+                                if (operation === 'get') {
+                                    return $elem.raty('score');
+                                }
+                                if (operation === 'set') {
+                                    //return $elem.data("rating", value);
+                                    $elem.attr('data-rating', value);
+                                    $elem.children("input").val(value);
+                                }
+                            }
+                        }}
+                ],
+                sortname: 'Name',
+                ignoreCase: true,
+                gridview: true,
+                viewrecords: true,
+                rownumbers: true,
+                height: "100%",
+                sortorder: "desc",
+                pager: '#pager',
+                editurl: 'clientArray',
+                loadComplete: function () {
+                    initRaty.call(this);
+                },
+                ondblClickRow: function (id) {
+                    // edit the row and save it on press "enter" key
+                    $(this).jqGrid('editRow', id, {
+                        keys: true,
+                        aftersavefunc: function (rowid) {
+                            initRaty.call(this.rows.namedItem(rowid));
+                        },
+                        afterrestorefunc: function (rowid) {
+                            initRaty.call(this.rows.namedItem(rowid));
+                        }
+                    });
+                },
+                onSelectRow: function (id) {
+                    if (id && id !== lastSel) {
+                        if (lastSel !== undefined) {
+                            var ind = $(this).jqGrid("getInd", lastSel, true);
+                            if ($(ind).attr("editable") === "1") {
+                                $(this).jqGrid('restoreRow', lastSel, function (rowid) {
+                                    initRaty.call(this.rows.namedItem(rowid));
+                                });
+                            }
+                        }
+                        lastSel = id;
+                    }
+                },
+                caption: "Implementing custom formatting, editing and searching on example of raty plugin"
+            });
+            grid.jqGrid('navGrid', '#pager');
+        });
+    //]]>
+    </script>
+</head>
+
+<body>
+    <table id="list"><tbody><tr><td></td></tr></tbody></table>
+    <div id="pager"></div>
+</body>
+</html>
