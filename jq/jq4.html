@@ -4,21 +4,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" >
 
-    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/redmond/jquery-ui.css" />
-    <link rel="stylesheet" type="text/css" href="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.3.1/css/ui.jqgrid.css" />
-    <style type="text/css">
-        html, body { font-size: 75%; }
-    </style>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.3.1/js/i18n/grid.locale-en.js"></script>
-    <script type="text/javascript">
-        $.jgrid.no_legacy_api = true;
-        $.jgrid.useJSON = true;
-    </script>
-    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.3.1/js/jquery.jqGrid.src.js"></script>
-    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.3.1/plugins/jQuery.jqGrid.dynamicLink1.js"></script>
-
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/redmond/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.3/css/ui.jqgrid.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.3/jquery.jqgrid.min.js"></script>
+    
     <script type="text/javascript">
     //<![CDATA[
         /*global $ */
@@ -78,20 +70,27 @@
                         $cellInput = $('input, select, textarea', cellDOM),
                         events = $cellInput.data('events'),
                         $this = $(this);
-                    if (events && events.keydown && events.keydown.length) {
-                        oldKeydown = events.keydown[0].handler;
-                        $cellInput.unbind('keydown', oldKeydown);
-                        $cellInput.bind('keydown', function (e) {
-                            $this.jqGrid('setGridParam', {cellEdit: true});
-                            oldKeydown.call(this, e);
-                            $this.jqGrid('setGridParam', {cellEdit: false});
-                        }).bind('focusout', function (e) {
-                            $this.jqGrid('setGridParam', {cellEdit: true});
-                            $this.jqGrid('restoreCell', iRow, iCol, true);
-                            $this.jqGrid('setGridParam', {cellEdit: false});
-                            $(cellDOM).removeClass("ui-state-highlight");
-                        });
-                    }
+					$cellInput.bind('focusout', function (e) {
+						$this.jqGrid('setGridParam', {cellEdit: true});
+						$this.jqGrid('saveCell', iRow, iCol, true);
+						$this.jqGrid('setGridParam', {cellEdit: false});
+						//$(cellDOM).removeClass("ui-state-highlight");
+					});
+					$cellInput.bind('keydown', function (e) {
+						if(e.keyCode==13){
+							$this.jqGrid('setGridParam', {cellEdit: true});
+							$this.jqGrid('saveCell', iRow, iCol, true);
+							$this.jqGrid('setGridParam', {cellEdit: false});
+						}else if(e.keyCode==27){
+							$this.jqGrid('setGridParam', {cellEdit: true});
+							$this.jqGrid('restoreCell', iRow, iCol, true);
+							$this.jqGrid('setGridParam', {cellEdit: false});
+						}
+						//$(cellDOM).removeClass("ui-state-highlight");
+						//$this.jqGrid('setGridParam', {cellEdit: true});
+						//oldKeydown.call(this, e);
+						//$this.jqGrid('setGridParam', {cellEdit: false});
+					});
                 },
                 caption: 'How to enable cell editing on double-click',
                 height: 'auto'
