@@ -6,26 +6,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/redmond/jquery-ui.css" />
-    <link rel="stylesheet" type="text/css" href="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.13.3/css/ui.jqgrid.css" />
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.3/css/ui.jqgrid.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.13.3/src/i18n/grid.locale-en.js"></script>
-    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.13.3/src/grid.base.js"></script>
-    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.13.3/src/grid.common.js"></script>
-    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.13.3/src/grid.formedit.js"></script>
-    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.13.3/src/grid.inlinedit.js"></script>
-    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.13.3/src/grid.celledit.js"></script>
-    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.13.3/src/grid.subgrid.js"></script>
-    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.13.3/src/grid.treegrid.js"></script>
-    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.13.3/src/grid.grouping.js"></script>
-    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.13.3/src/grid.custom.js"></script>
-    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.13.3/src/jquery.fmatter.js"></script>
-    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.13.3/src/jquery.searchFilter.js"></script>
-    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.13.3/src/grid.jqueryui.js"></script>
-    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.13.3/src/jqDnR.js"></script>
-    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.13.3/src/jqModal.js"></script>
-    <!--<script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.13.3/js/i18n/grid.locale-en.js"></script>
-    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.13.3/js/jquery.jqGrid.min.js"></script>-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.3/jquery.jqgrid.min.js"></script>
+    <!--<script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.15.1/js/i18n/grid.locale-en.js"></script>
+    <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.15.1/js/jquery.jqGrid.min.js"></script>-->
 
     <script type="text/javascript">
     //<![CDATA[
@@ -269,8 +256,9 @@
         });
 
 		function x(){alert(mydata);
+		var p = $("#list").jqGrid("getGridParam");
+				
 			for(var i=0;i<mydata.length;i++){
-				var p = $("#list").jqGrid("getGridParam");
 				p.data.push(mydata[i]);				
 			}
 			$("#list").trigger('reloadGrid');
