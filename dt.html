@@ -45,7 +45,7 @@ tfoot input {
   <div><br>
 	Toggle column: <a class="toggle-vis" data-column="0">Name</a> - <a class="toggle-vis" data-column="1">Position</a> - <a class="toggle-vis" data-column="2">Office</a> - <a class="toggle-vis" data-column="3">Extn</a> - <a class="toggle-vis" data-column="4">Start date</a> - <a class="toggle-vis" data-column="5">Salary</a>
   </div><br>
-  <div id="myTable"></div>
+  <div id="myGrid"></div>
   <div id='xx'/>
 
 </body>
@@ -988,21 +988,21 @@ function DataGrid(_cn){
 		_table.row('.selected').remove().draw( false );
 	}
 }
-var dg = new DataGrid('myTable');
-dg.pageSize=100;
-dg.init();
-dg.setData(data);
+var myGrid = new DataGrid('myGrid');
+myGrid.pageSize=100;
+myGrid.init();
+myGrid.setData(data);
 
 function fnFetch(){
-	dg.clear();
-	dg.setData(data);
+	myGrid.clear();
+	myGrid.setData(data);
 }
 
 $('a.toggle-vis').on( 'click', function (e) {
 	e.preventDefault();
 
 	// Get the column API object
-	var column = dg.getTable().column( $(this).attr('data-column') );
+	var column = myGrid.getTable().column( $(this).attr('data-column') );
 
 	// Toggle the visibility
 	column.visible( ! column.visible() );
@@ -1020,18 +1020,18 @@ $("#load").on("click", function (event) {
 			}).fail(function (jqXHR, textStatus, errorThrown) { 
 				  // needs to implement if it fails
 			});*/
-	dg.setData(data);
+	myGrid.setData(data);
 			
 });
 
 $('#clear').click( function () {
-	dg.clearSearch();
-	dg.clear();
+	myGrid.clearSearch();
+	myGrid.clear();
 } );
 
 $('#addRow').on( 'click', function () {
-	var counter = dg.getRecordCount();
-	dg.addRecord( {
+	var counter = myGrid.getRecordCount();
+	myGrid.addRecord( {
 		name: counter +'.1',
 		position: counter +'.2',
 		office: 'San Francisco',
@@ -1044,7 +1044,7 @@ $('#addRow').on( 'click', function () {
 } );
 $('#deleteRow').click( function () {
 	//_table.row('.selected').remove().draw( false );
-	dg.deleteRecord(2);
+	myGrid.deleteRecord(2);
 } );
 /*
 $.fn.dataTable.ext.search.push(
