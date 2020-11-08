@@ -1,0 +1,1069 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0057)file:///C:/Users/minisriram/Desktop/jquery-datatable.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <title> New Document </title>
+  <meta name="Generator" content="EditPlus">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <link rel="stylesheet" type="text/css" href="./dt_files/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="./dt_files/flags32.css">
+
+  <script type="text/javascript" language="javascript" src="./dt_files/jquery-3.5.1.js.download"></script>
+  <script type="text/javascript" language="javascript" src="./dt_files/jquery.dataTables.min.js.download"></script>
+ <style>
+div.dataTables_wrapper {
+	width: 700px;
+	margin: 0 auto;
+}
+td.highlight {
+	font-weight: bold;
+	color: blue;
+}
+.f32 .flag {
+	vertical-align: middle;
+	margin: -8px 0;
+}
+
+progress {
+	width: 100%;
+}
+tfoot input {
+	width: 100%;
+	padding: 3px;
+	box-sizing: border-box;
+}
+ </style></head>
+ 
+
+ <body>
+  <button id="addRow">Add new row</button>
+  <button id="deleteRow">Delte row</button>
+  <button id="clear">clear</button>
+  <button id="load">load</button>
+  <button id="reload" onclick="window.location.reload();">refresh</button>
+  <div><br>
+	Toggle column: <a class="toggle-vis" data-column="0">Name</a> - <a class="toggle-vis" data-column="1">Position</a> - <a class="toggle-vis" data-column="2">Office</a> - <a class="toggle-vis" data-column="3">Extn</a> - <a class="toggle-vis" data-column="4">Start date</a> - <a class="toggle-vis" data-column="5">Salary</a>
+  </div><br>
+  <div id="myTable"></div>
+  <div id='xx'/>
+
+</body>
+<script language="JavaScript">
+<!--
+var data = {
+	"draw": 1,
+  "recordsTotal": 570,
+  "recordsFiltered": 57,
+  "data": [
+    {
+      "id": "1",
+      "name": "Tiger Nixon",
+      "position": "System Architect",
+      "salary": "$320,800",
+      "start_date": "2011/04/25",
+      "office": "Edinburgh",
+      "extn": "5421"
+    },
+    {
+      "id": "2",
+      "name": "Garrett Winters",
+      "position": "Accountant",
+      "salary": "$170,750",
+      "start_date": "2011/07/25",
+      "office": "Tokyo",
+      "extn": "8422"
+    },
+    {
+      "id": "3",
+      "name": "Ashton Cox",
+      "position": "Junior Technical Author",
+      "salary": "$86,000",
+      "start_date": "2009/01/12",
+      "office": "San Francisco",
+      "extn": "1562"
+    },
+    {
+      "id": "4",
+      "name": "Cedric Kelly",
+      "position": null,
+      "salary": "$433,060",
+      "start_date": "2012/03/29",
+      "office": "Edinburgh",
+      "extn": "6224"
+    },
+    {
+      "id": "5",
+      "name": "Airi Satou",
+      "position": "Accountant",
+      "salary": "$162,700",
+      "start_date": "2008/11/28",
+      "office": "Tokyo",
+      "extn": "5407"
+    },
+    {
+      "id": "6",
+      "name": "Brielle Williamson",
+      "position": "Integration Specialist",
+      "salary": "$372,000",
+      "start_date": "2012/12/02",
+      "office": "New York",
+      "extn": "4804"
+    },
+    {
+      "id": "7",
+      "name": "Herrod Chandler",
+      "position": "Sales Assistant",
+      "salary": "$137,500",
+      "start_date": "2012/08/06",
+      "office": "San Francisco",
+      "extn": "9608"
+    },
+    {
+      "id": "8",
+      "name": "Rhona Davidson",
+      "position": "Integration Specialist",
+      "salary": "$327,900",
+      "start_date": "2010/10/14",
+      "office": "Tokyo",
+      "extn": "6200"
+    },
+    {
+      "id": "9",
+      "name": "Colleen Hurst",
+      "position": "Javascript Developer",
+      "salary": "$205,500",
+      "start_date": "2009/09/15",
+      "office": "San Francisco",
+      "extn": "2360"
+    },
+    {
+      "id": "10",
+      "name": "Sonya Frost",
+      "position": "Software Engineer",
+      "salary": "$103,600",
+      "start_date": "2008/12/13",
+      "office": "Edinburgh",
+      "extn": "1667"
+    },
+    {
+      "id": "11",
+      "name": "Jena Gaines",
+      "position": "Office Manager",
+      "salary": "$90,560",
+      "start_date": "2008/12/19",
+      "office": "London",
+      "extn": "3814"
+    },
+    {
+      "id": "12",
+      "name": "Quinn Flynn",
+      "position": "Support Lead",
+      "salary": "$342,000",
+      "start_date": "2013/03/03",
+      "office": "Edinburgh",
+      "extn": "9497"
+    },
+    {
+      "id": "13",
+      "name": "Charde Marshall",
+      "position": "Regional Director",
+      "salary": "$470,600",
+      "start_date": "2008/10/16",
+      "office": "San Francisco",
+      "extn": "6741"
+    },
+    {
+      "id": "14",
+      "name": "Haley Kennedy",
+      "position": "Senior Marketing Designer",
+      "salary": "$313,500",
+      "start_date": "2012/12/18",
+      "office": "London",
+      "extn": "3597"
+    },
+    {
+      "id": "15",
+      "name": "Tatyana Fitzpatrick",
+      "position": "Regional Director",
+      "salary": "$385,750",
+      "start_date": "2010/03/17",
+      "office": "London",
+      "extn": "1965"
+    },
+    {
+      "id": "16",
+      "name": "Michael Silva",
+      "position": "Marketing Designer",
+      "salary": "$198,500",
+      "start_date": "2012/11/27",
+      "office": "London",
+      "extn": "1581"
+    },
+    {
+      "id": "17",
+      "name": "Paul Byrd",
+      "position": "Chief Financial Officer (CFO)",
+      "salary": "$725,000",
+      "start_date": "2010/06/09",
+      "office": "New York",
+      "extn": "3059"
+    },
+    {
+      "id": "18",
+      "name": "Gloria Little",
+      "position": "Systems Administrator",
+      "salary": "$237,500",
+      "start_date": "2009/04/10",
+      "office": "New York",
+      "extn": "1721"
+    },
+    {
+      "id": "19",
+      "name": "Bradley Greer",
+      "position": "Software Engineer",
+      "salary": "$132,000",
+      "start_date": "2012/10/13",
+      "office": "London",
+      "extn": "2558"
+    },
+    {
+      "id": "20",
+      "name": "Dai Rios",
+      "position": "Personnel Lead",
+      "salary": "$217,500",
+      "start_date": "2012/09/26",
+      "office": "Edinburgh",
+      "extn": "2290"
+    },
+    {
+      "id": "21",
+      "name": "Jenette Caldwell",
+      "position": "Development Lead",
+      "salary": "$345,000",
+      "start_date": "2011/09/03",
+      "office": "New York",
+      "extn": "1937"
+    },
+    {
+      "id": "22",
+      "name": "Yuri Berry",
+      "position": "Chief Marketing Officer (CMO)",
+      "salary": "$675,000",
+      "start_date": "2009/06/25",
+      "office": "New York",
+      "extn": "6154"
+    },
+    {
+      "id": "23",
+      "name": "Caesar Vance",
+      "position": "Pre-Sales Support",
+      "salary": "$106,450",
+      "start_date": "2011/12/12",
+      "office": "New York",
+      "extn": "8330"
+    },
+    {
+      "id": "24",
+      "name": "Doris Wilder",
+      "position": "Sales Assistant",
+      "salary": "$85,600",
+      "start_date": "2010/09/20",
+      "office": "Sydney",
+      "extn": "3023"
+    },
+    {
+      "id": "25",
+      "name": "Angelica Ramos",
+      "position": "Chief Executive Officer (CEO)",
+      "salary": "$1,200,000",
+      "start_date": "2009/10/09",
+      "office": "London",
+      "extn": "5797"
+    },
+    {
+      "id": "26",
+      "name": "Gavin Joyce",
+      "position": "Developer",
+      "salary": "$92,575",
+      "start_date": "2010/12/22",
+      "office": "Edinburgh",
+      "extn": "8822"
+    },
+    {
+      "id": "27",
+      "name": "Jennifer Chang",
+      "position": "Regional Director",
+      "salary": "$357,650",
+      "start_date": "2010/11/14",
+      "office": "Singapore",
+      "extn": "9239"
+    },
+    {
+      "id": "28",
+      "name": "Brenden Wagner",
+      "position": "Software Engineer",
+      "salary": "$206,850",
+      "start_date": "2011/06/07",
+      "office": "San Francisco",
+      "extn": "1314"
+    },
+    {
+      "id": "29",
+      "name": "Fiona Green",
+      "position": "Chief Operating Officer (COO)",
+      "salary": "$850,000",
+      "start_date": "2010/03/11",
+      "office": "San Francisco",
+      "extn": "2947"
+    },
+    {
+      "id": "30",
+      "name": "Shou Itou",
+      "position": "Regional Marketing",
+      "salary": "$163,000",
+      "start_date": "2011/08/14",
+      "office": "Tokyo",
+      "extn": "8899"
+    },
+    {
+      "id": "31",
+      "name": "Michelle House",
+      "position": "Integration Specialist",
+      "salary": "$95,400",
+      "start_date": "2011/06/02",
+      "office": "Sydney",
+      "extn": "2769"
+    },
+    {
+      "id": "32",
+      "name": "Suki Burks",
+      "position": "Developer",
+      "salary": "$114,500",
+      "start_date": "2009/10/22",
+      "office": "London",
+      "extn": "6832"
+    },
+    {
+      "id": "33",
+      "name": "Prescott Bartlett",
+      "position": "Technical Author",
+      "salary": "$145,000",
+      "start_date": "2011/05/07",
+      "office": "London",
+      "extn": "3606"
+    },
+    {
+      "id": "34",
+      "name": "Gavin Cortez",
+      "position": "Team Leader",
+      "salary": "$235,500",
+      "start_date": "2008/10/26",
+      "office": "San Francisco",
+      "extn": "2860"
+    },
+    {
+      "id": "35",
+      "name": "Martena Mccray",
+      "position": "Post-Sales support",
+      "salary": "$324,050",
+      "start_date": "2011/03/09",
+      "office": "Edinburgh",
+      "extn": "8240"
+    },
+    {
+      "id": "36",
+      "name": "Unity Butler",
+      "position": "Marketing Designer",
+      "salary": "$85,675",
+      "start_date": "2009/12/09",
+      "office": "San Francisco",
+      "extn": "5384"
+    },
+    {
+      "id": "37",
+      "name": "Howard Hatfield",
+      "position": "Office Manager",
+      "salary": "$164,500",
+      "start_date": "2008/12/16",
+      "office": "San Francisco",
+      "extn": "7031"
+    },
+    {
+      "id": "38",
+      "name": "Hope Fuentes",
+      "position": "Secretary",
+      "salary": "$109,850",
+      "start_date": "2010/02/12",
+      "office": "San Francisco",
+      "extn": "6318"
+    },
+    {
+      "id": "39",
+      "name": "Vivian Harrell",
+      "position": "Financial Controller",
+      "salary": "$452,500",
+      "start_date": "2009/02/14",
+      "office": "San Francisco",
+      "extn": "9422"
+    },
+    {
+      "id": "40",
+      "name": "Timothy Mooney",
+      "position": "Office Manager",
+      "salary": "$136,200",
+      "start_date": "2008/12/11",
+      "office": "London",
+      "extn": "7580"
+    },
+    {
+      "id": "41",
+      "name": "Jackson Bradshaw",
+      "position": "Director",
+      "salary": "$645,750",
+      "start_date": "2008/09/26",
+      "office": "New York",
+      "extn": "1042"
+    },
+    {
+      "id": "42",
+      "name": "Olivia Liang",
+      "position": "Support Engineer",
+      "salary": "$234,500",
+      "start_date": "2011/02/03",
+      "office": "Singapore",
+      "extn": "2120"
+    },
+    {
+      "id": "43",
+      "name": "Bruno Nash",
+      "position": "Software Engineer",
+      "salary": "$163,500",
+      "start_date": "2011/05/03",
+      "office": "London",
+      "extn": "6222"
+    },
+    {
+      "id": "44",
+      "name": "Sakura Yamamoto",
+      "position": "Support Engineer",
+      "salary": "$139,575",
+      "start_date": "2009/08/19",
+      "office": "Tokyo",
+      "extn": "9383"
+    },
+    {
+      "id": "45",
+      "name": "Thor Walton",
+      "position": "Developer",
+      "salary": "$98,540",
+      "start_date": "2013/08/11",
+      "office": "New York",
+      "extn": "8327"
+    },
+    {
+      "id": "46",
+      "name": "Finn Camacho",
+      "position": "Support Engineer",
+      "salary": "$87,500",
+      "start_date": "2009/07/07",
+      "office": "San Francisco",
+      "extn": "2927"
+    },
+    {
+      "id": "47",
+      "name": "Serge Baldwin",
+      "position": "Data Coordinator",
+      "salary": "$138,575",
+      "start_date": "2012/04/09",
+      "office": "Singapore",
+      "extn": "8352"
+    },
+    {
+      "id": "48",
+      "name": "Zenaida Frank",
+      "position": "Software Engineer",
+      "salary": "$125,250",
+      "start_date": "2010/01/04",
+      "office": "New York",
+      "extn": "7439"
+    },
+    {
+      "id": "49",
+      "name": "Zorita Serrano",
+      "position": "Software Engineer",
+      "salary": "$115,000",
+      "start_date": "2012/06/01",
+      "office": "San Francisco",
+      "extn": "4389"
+    },
+    {
+      "id": "50",
+      "name": "Jennifer Acosta",
+      "position": "Junior Javascript Developer",
+      "salary": "$75,650",
+      "start_date": "2013/02/01",
+      "office": "Edinburgh",
+      "extn": "3431"
+    },
+    {
+      "id": "51",
+      "name": "Cara Stevens",
+      "position": "Sales Assistant",
+      "salary": "$145,600",
+      "start_date": "2011/12/06",
+      "office": "New York",
+      "extn": "3990"
+    },
+    {
+      "id": "52",
+      "name": "Hermione Butler",
+      "position": "Regional Director",
+      "salary": "$356,250",
+      "start_date": "2011/03/21",
+      "office": "London",
+      "extn": "1016"
+    },
+    {
+      "id": "53",
+      "name": "Lael Greer",
+      "position": "Systems Administrator",
+      "salary": "$103,500",
+      "start_date": "2009/02/27",
+      "office": "London",
+      "extn": "6733"
+    },
+    {
+      "id": "54",
+      "name": "Jonas Alexander",
+      "position": "Developer",
+      "salary": "$86,500",
+      "start_date": "2010/07/14",
+      "office": "San Francisco",
+      "extn": "8196"
+    },
+    {
+      "id": "55",
+      "name": "Shad Decker",
+      "position": "Regional Director",
+      "salary": "$183,000",
+      "start_date": "2008/11/13",
+      "office": "Edinburgh",
+      "extn": "6373"
+    },
+    {
+      "id": "56",
+      "name": "Michael Bruce",
+      "position": "Javascript Developer",
+      "salary": "$183,000",
+      "start_date": "2011/06/27",
+      "office": "Singapore",
+      "extn": "5384"
+    },
+    {
+      "id": "57",
+      "name": "Donna Snider",
+      "position": "Customer Support",
+      "salary": "$112,000",
+      "start_date": "2011/01/25",
+      "office": "New York",
+      "extn": "4226"
+    }
+  ]
+};
+var columns = [
+	{ "data": "name",inputType:'text',search:true },
+	{ "data": "position" },
+	{
+		className: 'f32', // used by world-flags-sprite library
+		data: 'office',
+		search:true,
+		options: [
+			{text: 'ar', value:'Argentina'},
+			{text: '_Scotland', value:'Edinburgh'},
+			{text: '_England', value:'London'},
+			{text: 'ny', value:'New York'},
+			{text: 'us', value:'San Francisco'},
+			{text: 'au', value:'Sydney'},
+			{text: 'jp', value:'Tokyo'}
+		],
+		inputType: 'select',
+		customRender: function(r, c, data, rowObject) {
+			var country = columns[c].valueMap[data];
+			if(country){
+				return '<span class="flag ' + country + '"></span> ' + country;
+			}else{
+				return '';
+			}
+		}
+	},
+	{
+		data: 'extn',
+		customRender: function(r, c, data, rowObject) {
+			return '<progress value="' + data + '" max="9999"></progress>';
+		}
+		 
+	},
+	{ "data": "start_date" },
+	{ "data": "salary" }
+];
+function DataGrid(_cn){
+	var _tn = _cn + '-tb', _cid = '#' + _cn, _tId = '#' + _tn, 
+		_tFooter = _tId + ' tfoot th', _tb = _tId + ' tbody', _dt;
+	var _table, me = this;
+
+	this.pageSize = 10;
+
+	this.init=function(){
+		var ths='';
+		//building valueMaps
+		for(var c=0;c<columns.length;c++){
+			switch(columns[c].inputType){
+				case 'select':
+					columns[c].valueMap = new Array();
+					for(var i=0;i<columns[c].options.length;i++){
+						var text = columns[c].options[i].text;
+						var value = columns[c].options[i].value;
+						columns[c].valueMap[value]=text;
+					}
+					break;
+			}
+			columns[c].render = function(data, type, row, meta) {
+				return renderCell(meta.row, meta.col, data, row);
+			};
+			ths += '<th>'+columns[c].data+'</th>';
+		}
+		var html = '<table id="'+_tn+'" class="display" style="width:800"><thead><tr>';
+		//should be dynamic width
+		html += ths;
+		html += '</tr></thead><tfoot><tr>';
+		html += ths;
+		html += '</tr></tfoot></table>';
+		
+		$(_cid).html(html);
+
+		// search controls
+		$(_tFooter).each( function (c) {
+			var title = 'Search '+$(this).text();
+			$(this).html('');
+			if(columns[c].search==true){
+				if(columns[c].options){
+					var select = $('<select><option value="">'+title+'</select>');
+					for(var i=0;i<columns[c].options.length;i++){
+						var optionText = columns[c].options[i].text;
+						var optionValue = columns[c].options[i].value;
+						select.append(new Option(optionText, optionValue));
+					}
+					$(this).append(select);
+					select.css('width','100%');
+					select.css('height','25');//should be dynamic height
+				}else{
+					//date should also be handled
+					$(this).html( '<input type="text" placeholder="'+title+'" />' );
+				}
+			}
+		} );
+
+		_table= $(_tId).DataTable( {
+			//stateSave: true,
+			pageLength: me.pageSize,
+			destroy: true,
+			scrollY: 200,
+			scrollX: true,
+			//pagingType: "full_numbers",//remove for default
+			//paging: false,
+			//searching: false,
+			createdRow: function ( row, data, index ) {
+				if ( data.salary.replace(/[\$,]/g, '') * 1 > 150000 ) {
+					$('td', row).eq(5).addClass('highlight');
+				}
+			},
+			drawCallback: function( settings, start, end, max, total, pre ) {  
+				console.log(this.fnSettings().json); /* for json response you can use it also*/ 
+				//alert(this.fnSettings().fnRecordsTotal()); // total number of rows
+			},
+			/*
+			initComplete: function () {
+				this.api().columns().every( function () {
+					var column = this;
+					var select = $('<select><option value=""></option></select>')
+						.appendTo( $(column.footer()).empty() )
+						.on( 'change', function () {
+							var val = $.fn.dataTable.util.escapeRegex(
+								$(this).val()
+							);
+	 
+							column
+								.search( val ? '^'+val+'$' : '', true, false )
+								.draw();
+						} );
+	 
+					column.data().unique().sort().each( function ( d, j ) {
+						select.append( '<option value="'+d+'">'+d+'</option>' )
+					} );
+				} );
+			},*/
+			
+			initComplete: function () {
+				_dt=this;
+				// Apply the search
+				this.api().columns().every( function () {
+					var that = this;
+					//fire the search on key code enter
+					$( 'input', this.footer() ).on( 'change', function () {
+					//$( 'input', this.footer() ).on( 'keyup change clear', function () {
+						if ( that.search() !== this.value ) {
+							fnFetch();
+						}
+					}).on('keydown', function(e){
+						if(e.keyCode==13){
+							fnFetch();
+						}
+					});
+					$( 'select', this.footer() ).on( 'change', function () {
+						if ( that.search() !== this.value ) {
+							fnFetch();
+						}
+					});
+				} );
+			},
+			/*
+			initComplete: function () {
+				var api = this.api();
+				api.$('td').click( function () {
+					api.search( this.innerHTML ).draw();
+				} );
+			},*/
+			order: [[ 3, "desc" ]],//default order
+			//dom: '<"top"i>rt<"bottom"flp><"clear">',
+			columnDefs: [ {
+				targets: [1],
+				data: null,
+				defaultContent: "<button>Click!</button>",
+				width: "200",
+				className: 'dt-head-center'//https://datatables.net/manual/styling/classes#Cell-classes
+			},{
+				targets: [0,2],
+				width: "200"
+			} ],
+			autoWidth: false,
+			/*
+			columnDefs: [
+				{
+					targets: [ 2 ],
+					visible: false,
+					searchable: false
+				},
+				{
+					targets: [ 3 ],
+					visible: false
+				}
+			],*/
+			/*
+			columnDefs: [ {
+				targets: [ 0 ],
+				orderData: [ 0, 1 ]
+			}, {
+				targets: [ 1 ],
+				orderData: [ 1, 0 ]
+			}, {
+				targets: [ 4 ],
+				orderData: [ 4, 0 ]
+			} ],*/
+			//paging:   false,
+			//ordering: false,
+			//info:     false,
+			/*
+			language: {
+				"decimal": ",",
+				"thousands": "."
+			},*/
+			/*
+			"language": {
+				"lengthMenu": "Display _MENU_ records per page",
+				"zeroRecords": "Nothing found - sorry",
+				"info": "Showing page _PAGE_ of _PAGES_",
+				"infoEmpty": "No records available",
+				"infoFiltered": "(filtered from _MAX_ total records)"
+			},*/
+			/*
+			processing: true,
+			serverSide: true,
+			"ajax": {
+				"url": "./data.jsp",
+				"type": "get",
+				"dataType": "json",
+				"data": function ( d ) {
+					d.myKey = "myValue";
+					// d.custom = $('#myInput').val();
+					// etc
+				}
+			 },
+			//*/
+			data: [],
+			columns: columns
+		} );
+
+
+
+		/*$(_tb)
+		.on( 'mouseenter', 'td', function () {
+			var c = _table.cell(this).index().column;
+
+			$( _table.cells().nodes() ).removeClass( 'highlight' );
+			$( _table.column( c ).nodes() ).addClass( 'highlight' );
+		} );*/
+		/*
+		$(_tb)
+		.on( 'click', 'td', function () {
+			var c = _table.cell(this).index().column;
+			var r = _table.cell(this).index().row;
+			$( _table.cells().nodes() ).removeClass( 'highlight' );
+			$(_table.cells(r,c).nodes()).addClass( 'highlight' );
+			//$( _table.cells().nodes() ).removeClass( 'highlight' );
+			//$( _table.column( c ).nodes()).addClass( 'highlight' );
+		} );*/
+		$(_tb).on( 'dblclick', 'td', function () {
+			var c = _table.cell(this).index().column;
+			var r = _table.cell(this).index().row;
+			startEdit(r,c);
+		});
+
+		function renderCell(r,c,data,rowObject){
+			if(columns[c].customRender){
+				return columns[c].customRender(r,c,data, rowObject);
+			}else{
+				switch(columns[c].inputType){
+				case 'select':
+					return columns[c].valueMap[data]?columns[c].valueMap[data]:'';
+				default:
+					return data;
+				}
+			}
+		}
+	 
+		function startEdit(r, c){
+			var row = data.data[r];
+			var id='dc-'+r+'-'+c;
+
+			switch(columns[c].inputType){
+			case 'text':
+				var html = '<input id="'+id+'" type="text">';
+				$(_table.cells(r,c).nodes()).html(html);
+				$('#'+id).val(row[columns[c].data]);
+				$('#'+id).focus();
+				$('#'+id).blur(function(){
+					row[columns[c].data]=this.value;
+					$(_table.cells(r,c).nodes()).html(this.value);
+					//_table.row(r).invalidate().draw(false);
+				});
+				$('#'+id).keydown(function(){
+					switch(event.keyCode){
+						case 13:
+							row[columns[c].data]=this.value;
+							$(_table.cells(r,c).nodes()).html(this.value);
+							//_table.row(r).invalidate().draw(false);
+							break;
+						case 27:
+							$(_table.cells(r,c).nodes()).html(row[columns[c].data]);
+					}
+				});
+				break;
+			case 'select':
+				var html = '<select id="'+id+'"></select>';
+				$(_table.cells(r,c).nodes()).html(html);
+				for(var i=0;i<columns[c].options.length;i++){
+					var optionText = columns[c].options[i].text;
+					var optionValue = columns[c].options[i].value;
+					$('#'+id).append(new Option(optionText, optionValue));
+				}
+				$('#'+id).val(row[columns[c].data]);
+				$('#'+id).focus();
+				var oldText = columns[c].valueMap[row[columns[c].data]];
+				$('#'+id).blur(function(){
+					var newText = columns[c].valueMap[this.value];
+					row[columns[c].data]=this.value;
+					$(_table.cells(r,c).nodes()).html(newText);
+					//_table.cells(r,c).data(this.value);
+					//_table.cells(r,c).render('display');
+					_table.row(r).invalidate().draw(false);
+				});
+				$('#'+id).keydown(function(){
+					switch(event.keyCode){
+						case 13:
+						var newText = columns[c].valueMap[this.value];
+						row[columns[c].data]=this.value;
+							$(_table.cells(r,c).nodes()).html(newText);
+							_table.row(r).invalidate().draw(false);
+							break;
+						case 27:
+							$(_table.cells(r,c).nodes()).html(oldText);
+					}
+				});
+				break;
+			}//alert(event.keyCode);
+		}
+ 
+		$(_tId)
+			.on( 'order.dt',  function (a,b,c) { eventFired( ['Order',a,b,c]); })
+			//.on( 'search.dt', function (a,b,c) { eventFired( ['Search',a,b,c] ); } )
+			.on( 'page.dt',   function (a,b,c) { eventFired( ['Page',a,b,c] ); } )
+			.DataTable();
+		
+		var eventFired = function ( args ) {
+			//alert(args);
+			try{
+			if(event.srcElement && event.srcElement.tagName=='TH'){
+				$('#xx').html(event.srcElement.tagName+'<br>'+_table.order());
+				//fnFetch();
+			}
+			}catch(e){}
+		}
+
+		$(_tb).on( 'click', 'button', function () {
+			var data = _table.row( $(this).parents('tr') ).data();
+			alert( data.name +"'s salary is: "+ data.salary );
+		} );
+
+		var selected=[];
+		$(_tb).on('click', 'tr', function () {
+			/*
+			//multi row selection
+			var id = this.id;
+			var index = $.inArray(id, selected);
+	 
+			if ( index === -1 ) {
+				selected.push( id );
+			} else {
+				selected.splice( index, 1 );
+			}
+	 
+			$(this).toggleClass('selected');*/
+
+			//single row selection
+			if ( $(this).hasClass('selected') ) {
+				$(this).removeClass('selected');
+			} else {
+				_table.$('tr.selected').removeClass('selected');
+				$(this).addClass('selected');
+			}
+		} );
+
+		/*
+		// Event listener to the two range filtering inputs to redraw on input
+		// in conjunction with below custom search function
+		$('#externalMinSearchField, #externalMaxSearchField').keyup( function() {
+			table.draw();
+		} );*/
+	}
+	this.getTable=function(){
+		return _table;
+	}
+	this.setData=function(__data){
+		_table.clear().draw();
+		_table.rows.add(__data.data).draw();
+	}
+	this.clear=function(){
+		_table.search('').columns().search('').clear().draw();
+	}
+	this.clearSearch=function(){
+		_dt.api().columns().every( function () {
+			var that = this;
+			$('input', this.footer() ).each(function () {
+				this.value='';
+			});
+			$('select', this.footer() ).each(function () {
+				this.value='';
+			});
+		} );
+	}
+	this.addRecord=function(rowObj){
+		_table.row.add(rowObj).draw( false );
+	}
+	this.getRecordCount=function(){
+		return _table.data().count();
+	}
+	this.deleteRecord=function(idx){
+		//_table.row(idx).remove().draw( false );
+		_table.row('.selected').remove().draw( false );
+	}
+}
+var dg = new DataGrid('myTable');
+dg.pageSize=100;
+dg.init();
+dg.setData(data);
+
+function fnFetch(){
+	dg.clear();
+	dg.setData(data);
+}
+
+$('a.toggle-vis').on( 'click', function (e) {
+	e.preventDefault();
+
+	// Get the column API object
+	var column = dg.getTable().column( $(this).attr('data-column') );
+
+	// Toggle the visibility
+	column.visible( ! column.visible() );
+} );
+
+$("#load").on("click", function (event) {
+	/*
+   $.ajax({
+			url: "",
+			type: "post",
+			data: { searchText: searchText }
+		}).done(function (result) {
+			Table.clear().draw();
+			Table.rows.add(result).draw();
+			}).fail(function (jqXHR, textStatus, errorThrown) { 
+				  // needs to implement if it fails
+			});*/
+	dg.setData(data);
+			
+});
+
+$('#clear').click( function () {
+	dg.clearSearch();
+	dg.clear();
+} );
+
+$('#addRow').on( 'click', function () {
+	var counter = dg.getRecordCount();
+	dg.addRecord( {
+		name: counter +'.1',
+		position: counter +'.2',
+		office: 'San Francisco',
+		extn: counter +'.4',
+		start_date: counter +'.5',
+		salary: counter+'.6'
+	} );
+
+	counter++;
+} );
+$('#deleteRow').click( function () {
+	//_table.row('.selected').remove().draw( false );
+	dg.deleteRecord(2);
+} );
+/*
+$.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+        var min = parseInt( $('#min').val(), 10 );
+        var max = parseInt( $('#max').val(), 10 );
+        var age = parseFloat( data[3] ) || 0; // use data for the age column
+ 
+        if ( ( isNaN( min ) && isNaN( max ) ) ||
+             ( isNaN( min ) && age <= max ) ||
+             ( min <= age   && isNaN( max ) ) ||
+             ( min <= age   && age <= max ) )
+        {
+            return true;
+        }
+        return false;
+    }
+);
+*/
+//-->
+</script>
+</html>
